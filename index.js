@@ -7,8 +7,8 @@ const fs = require("fs");
 
 var datas = fs.readFileSync('./akun.txt', 'utf8');
 data = datas.split(/\r?\n/);
-console.log(`(${date()}) Automation Grab Token Aliexpress`)
-console.log(`(${date()}) Dont Sell or Share to Anyone!!!`)
+console.log(`(${date()}) Automation Grab Token Aliexpress`);
+console.log(`(${date()}) Dont Sell or Share to Anyone!!!`);
 
 (async () => {
   process.setMaxListeners(0);
