@@ -1,0 +1,19 @@
+{
+  "name": "tokengrabber",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^10.1.0",
+    "puppeteer-extra": "^3.1.18",
+    "puppeteer-extra-plugin-adblocker": "^2.11.11",
+    "puppeteer-extra-plugin-stealth": "^2.7.8",
+    "user-agents": "^1.0.734"
+  }
+
+}
