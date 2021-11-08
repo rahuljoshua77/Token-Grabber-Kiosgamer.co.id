@@ -5,10 +5,8 @@ const UserAgent = require("user-agents");
 const date = () => new Date().toLocaleTimeString();
 const fs = require("fs");
 
-var datas = fs.readFileSync('./akun.txt', 'utf8');
+var datas = fs.readFileSync('./akusn.txt', 'utf8');
 data = datas.split(/\r?\n/);
-console.log(`(${date()}) Automation Grab Token Aliexpress`);
-console.log(`(${date()}) Dont Sell or Share to Anyone!!!`);
 
 (async () => {
   process.setMaxListeners(0);
@@ -33,37 +31,28 @@ console.log(`(${date()}) Dont Sell or Share to Anyone!!!`);
         await page.setViewport({ width: 350, height: 700 });
 
         await page.goto(
-            "https://thirdparty.aliexpress.com/login.htm?spm=a2g0n.login-h5.0.0.48824378dLLO84&type=gg&from=msite&return_url=https%3A%2F%2Ftrade.aliexpress.com%2ForderList.htm%3Fspm%3Da2g0o.home.1000001.31.650c21457wWf2q%26tracelog%3Dws_topbar%26tsp%3D1615907525265"
+            "https://authgop.garena.com/oauth/login?client_id=10017&redirect_uri=https%3A%2F%2Fkiosgamer.co.id%2Fapp&response_type=token&platform=1&locale=id-ID&theme=mshop_iframe_white"
         );
         console.log(`(${date()}) (${email}) ==> Trying to Login`);
         try {
-            await page.waitForSelector("input[type=email]", {
+            await page.waitForSelector("#sso_login_form_account", {
                 visible: true,
                 timeout: 30000,
             });
-            await page.type("input[type=email]", email,{ delay: 100 });
-            try {
-                await page.click("#identifierNext > div > button > div.VfPpkd-RLmnJb");
-            } catch (error) {
-                await page.click("#next");
-            }
-            await page.waitForSelector("input[type=password]", {
+            await page.type("#sso_login_form_account", email,{ delay: 100 });
+            
+            await page.waitForSelector("#sso_login_form_password", {
                 visible: true,
                 timeout: 30000,
             });
-            await page.type("input[type=password]", password,{ delay: 100 });
-            try {
-                await page.click("#passwordNext > div > button > div.VfPpkd-RLmnJb");
-            } catch (error) {
-                await page.click("#submit");
-            }
+            await page.type("#sso_login_form_password", password,{ delay: 100 });
+            await page.click('#confirm-btn');
             const [response] = await Promise.all([
-                page.waitForResponse((response) => response.url().includes("tokenLogin")),
+                page.waitForResponse((response) => response.url().includes("https://kiosgamer.co.id/app?access_token=")),
             ]);
-            getUrl = response._url.split('tokenLogin.htm?')
-            token_fix = 'https://login.aliexpress.com/tokenLogin.htm?'+getUrl[1]
-            console.log(`(${date()}) (${email}) ==> ${token_fix}`);
-            fs.appendFileSync('result.txt',`${email}|${password}|${token_fix}\n`)
+         
+            console.log(`(${date()}) (${email}) ==> ${response._url}`);
+            fs.appendFileSync('result.txt',`${email}|${password}|${response._url}\n`)
             await browser.close();
         }
         catch(e){
